@@ -1,0 +1,73 @@
+plugins {
+    id 'java'
+    id 'war'
+    id 'org.springframework.boot' version '2.7.18'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.ttasum'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    providedRuntime
+}
+
+repositories {
+    mavenCentral()
+}
+
+springBoot {
+    mainClass = 'com.ttasum.memorial.MemorialApplication'
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc' // JDBC를 통한 DB 연결 (MyBatis 등과 함께 사용 가능)
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // JPA 기반 ORM 사용을 위한 의존성
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf' // 서버 사이드 렌더링을 위한 Thymeleaf 템플릿 엔진
+    implementation 'org.springframework.boot:spring-boot-starter-web' // MVC 기반 REST API 웹 애플리케이션
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    testImplementation 'io.projectreactor:reactor-test'
+    compileOnly 'org.projectlombok:lombok' // 컴파일 시 Lombok 어노테이션 지원 (getter/setter 등)
+//    developmentOnly 'org.springframework.boot:spring-boot-devtools' // 핫 리로딩 등 개발 편의 기능 제공
+    runtimeOnly 'com.mysql:mysql-connector-j' // MySQL 데이터베이스 연동용 드라이버
+    annotationProcessor 'org.projectlombok:lombok' // Lombok 어노테이션을 처리하는 프로세서
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher' // JUnit 플랫폼 런처 (테스트 실행용)
+    testImplementation 'org.springframework.boot:spring-boot-starter-test' // 단위 테스트, 통합 테스트용 기본 테스트 라이브러리
+    testImplementation 'io.projectreactor:reactor-test' // WebFlux의 비동기 테스트를 위한 Reactor 테스트 도구
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher' // (중복) JUnit 플랫폼 런처
+    implementation 'org.springframework.boot:spring-boot-starter-mail' // 이메일 발송 기능 (인증 메일 등)
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'  // Swagger (springfox)
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'net.logstash.logback:logstash-logback-encoder:6.6' //logstash
+    implementation 'io.github.cdimascio:dotenv-java:2.2.4'  //.env
+
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    //s3 관련 의존성
+    implementation 'software.amazon.awssdk:s3:2.20.0'
+    implementation 'software.amazon.awssdk:netty-nio-client:2.20.0'
+
+    // security 관련 설정
+    implementation('org.springframework.boot:spring-boot-starter-security')  //스프링 시큐리티 스탈터
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
+    testImplementation('org.springframework.security:spring-security-test')  //시큐리티 테스트
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+// build.gradle
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.register("prepareKotlinBuildScriptModel"){}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <title>Admin DashBoard</title>
+</head>
+<body>
+관리자 DashBoard
+<div>
+  <button type="button" onclick="window.location.href='/admin/blameTextList'">비난 글 관리</button>
+</div>
+<script>
+  function blameTextManagement() {
+    axios.get('/admin/blameText')
+            .then(response => {
+              // 정상 응답 처리
+              alert("접근 권한 통과: 페이지 이동");
+            })
+            .catch(error => {
+              if (error.response && error.response.status === 403) {
+                alert("⚠️ 권한이 없습니다. 관리자에게 문의하세요.");
+              } else {
+                alert("에러가 발생했습니다: " + error.message);
+              }
+            });
+  }
+</script>
+</body>
+</html>

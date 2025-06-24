@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Sign up</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<h2>Admin SignUp</h2>
+
+<div>
+    <label for="id-input">ID:</label>
+    <input type="text" id="id-input" name="id" oninput="validateIdStrength()">
+    <div id="id-msg" style="color: red; font-size: 0.9em;"></div>
+    <input type="button" id="check-id-btn" onclick="checkValidId()" value="ID 중복 확인">
+    <span id="id-check-status" style="margin-left: 10px; font-size: 0.9em;"></span>
+</div>
+
+<div>
+    <label for="name-input">Name:</label>
+    <input type="text" id="name-input" name="name">
+</div>
+
+<div>
+    <label for="pw-input">PW:</label>
+    <input type="password" id="pw-input" name="password" oninput="validatePwStrength()">
+    <div id="pw-msg" style="color: red; font-size: 0.9em;"></div>
+</div>
+
+<div>
+    <label for="pw-check-input">PW (check):</label>
+    <input type="password" id="pw-check-input" name="passwordCheck">
+    <button type="button" id="check-pw-btn" onclick="checkPw()">Check</button>
+    <span id="pw-check-status" style="margin-left: 10px; font-size: 0.9em;"></span>
+</div>
+
+<div>
+    <label for="age-input">Age:</label>
+    <input type="number" id="age-input" name="age">
+</div>
+
+<div>
+    <label for="gender-select">Gender:</label>
+    <select id="gender-select" name="gender">
+        <option value="남">남자</option>
+        <option value="여">여자</option>
+    </select>
+</div>
+
+<div>
+    <label for="emailLocalPart">Email:</label>
+    <input type="text" id="emailLocalPart" name="emailLocal"> @
+    <input type="text" id="emailDomain" name="emailDomain">
+</div>
+
+<div>
+    <label for="tel-input">Phone Number:</label>
+    <input type="tel" id="tel-input" name="phone">
+</div>
+
+<div>
+    <label for="department-select">Department:</label>
+    <select id="department-select" name="department">
+        <option value="">-- 부서 선택 --</option>
+        <option th:each="department : ${departments}"
+                th:value="${department.id}"
+                th:text="|${department.hqName} - ${department.dept1Name} ${department.dept2Name}|">
+        </option>
+    </select>
+</div>
+
+<div>
+    <label for="position-select">Position:</label>
+    <select id="position-select" name="position">
+        <option value="">-- 직책 선택 --</option>
+        <option th:each="position : ${positions}"
+                th:value="${position.positionCode}"
+                th:text="${position.name}">
+        </option>
+    </select>
+</div>
+
+<div>
+    <label for="authority-select">Authority:</label>
+    <select id="authority-select" name="authority">
+        <option value="">-- 권한 선택 --</option>
+        <!--/*@thymesVar id="authorityCode" type=""*/-->
+        <option th:each="auth : ${authorities}"
+                th:value="${auth.authorityCode}"
+                th:text="${auth.name}">
+        </option>
+    </select>
+</div>
+<div>
+    <label>
+        <button type="submit" onclick="signUp()">등록</button>
+    </label>
+</div>
+<script>
+    const pwInput = document.getElementById("pw-input");
+    const pwCheck = document.getElementById("pw-check-input");
+    const idInput = document.getElementById("id-input");
+
+    // pw 복붙 막음
+    pwInput.addEventListener("copy", (e) => e.preventDefault());
+    pwInput.addEventListener("paste", (e) => e.preventDefault());
+    pwInput.addEventListener("cut", (e) => e.preventDefault());
+    pwCheck.addEventListener("copy", (e) => e.preventDefault());
+    pwCheck.addEventListener("paste", (e) => e.preventDefault());
+    pwCheck.addEventListener("cut", (e) => e.preventDefault());
+
+    // ID 확인(8글자 이상, 영어 대문자, 특수 문자)
+    function validateIdStrength() {
+        const hasUpperCaseId = /[A-Z]/.test(idInput.value);
+        const hasSpecialChar = /[^A-Za-z0-9]/.test(idInput.value);
+        const idMsg = document.getElementById("id-msg");
+
+        let messages = []
+        // 8글자 이상
+        if(idInput.value.length < 8) {
+            messages.push("ID는 8글자 이상이어야 합니다.");
+        }
+
+        // 영문 대문자 여부
+        if(!hasUpperCaseId){
+            messages.push("ID에는 영문 대문자가 포함되어야 합니다.");
+        }
+
+        // 특수 문자 여부
+        if(!hasSpecialChar) {
+            messages.push("ID에는 특수문자가 포함되어야 합니다.");
+        }
+
+        // 전달할 메세지가 존재하는 경우
+        if(messages.length > 0) {
+            idMsg.innerHTML = messages.join("<br>");
+            idMsg.style.color = "red";
+            idMsg.className = "not-ok";
+        }else {
+            idMsg.textContent = "안전한 아이디 입니다.";
+            idMsg.style.color = "green";
+            idMsg.className = "ok";
+        }
+        // ID 값이 변경되었으므로 상태 초기화
+        document.getElementById("id-check-status").textContent = "";
+        document.getElementById("check-id-btn").disabled = false;
+        idInput.readOnly = false;
+    }
+
+    // ID 확인(겹치는지 확인, 8글자 이상, 영어 대문자, 숫자 포함)
+    function checkValidId() {
+        let idClass = document.getElementById("id-msg").className;
+        // 유효한 지 확인
+        if(idClass === "not-ok") {
+            alert("ID 입력 값의 조건이 충족되지 않습니다. 조건을 다시 확인해주세요.")
+            return;
+        }
+
+        axios.get('/admin/checkId', {
+            params: {
+                id: idInput.value
+            }
+        }).then(response => {
+            alert(response.data.message);
+
+            if(response.data.success) {
+                // 상태 표시: 확인됨
+                const statusSpan = document.getElementById("id-check-status");
+                statusSpan.textContent = "확인됨";
+                statusSpan.style.color = "green";
+
+                // 버튼 비활성화
+                document.getElementById("check-id-btn").disabled = true;
+
+                // ID 입력창도 읽기 전용 처리
+                idInput.readOnly = true;
+            }
+        }).catch(error => {
+            if (error.response && error.response.data) {
+                alert(error.response.data.message);
+            } else {
+                alert("서버 오류가 발생했습니다.");
+            }
+        });
+    }
+
+    // pw 입력 재확인
+    function checkPw() {
+        const pwMsg = document.getElementById("pw-msg");
+
+        if (pwMsg.className === "not-ok") {
+            alert("입력 값이 유효하지 않습니다. 조건을 다시 확인해 주세요.")
+            return;
+        }
+
+        if (this.isNull(pwCheck.value)){
+            alert("빈 값입니다.");
+            return;
+        }
+        if(pwInput.value === pwCheck.value) {
+            alert("확인 되었습니다.");
+            const statusSpanePw = document.getElementById("pw-check-status");
+            statusSpanePw.style.color = "green";
+            statusSpanePw.textContent = "확인됨";
+
+            document.getElementById("check-pw-btn").disabled = true;
+            pwCheck.readOnly = true;
+        } else {
+            alert("비밀번호가 다릅니다.");
+            pwCheck.focus();
+        }
+    }
+
+    // pw 유효값 검사
+    function validatePwStrength() {
+        let pw = pwInput.value;
+        const pwMsg = document.getElementById("pw-msg");
+
+        const hasUppercase = /[A-Z]/.test(pw);
+        const hasSpecialChar = /[^A-Za-z0-9]/.test(pw); // 특수문자 포함 여부
+
+        let messages = [];
+
+        if (pw.length < 8) {
+            messages.push("8자 이상이어야 합니다.");
+        }
+
+        if (!hasUppercase) {
+            messages.push("영문 대문자를 포함해야 합니다.");
+        }
+        if (!hasSpecialChar) {
+            messages.push("특수문자를 포함해야 합니다.");
+        }
+
+        if (messages.length > 0) {
+            pwMsg.innerHTML = messages.join("<br>");
+            pwMsg.style.color = "red";
+            pwMsg.className = "not-ok";
+        } else {
+            pwMsg.textContent = "안전한 비밀번호입니다.";
+            pwMsg.style.color = "green";
+            pwMsg.className = "ok";
+        }
+
+        // pw가 바뀌었으므로 재설정
+        document.getElementById("pw-check-status").textContent = "";
+        document.getElementById("check-pw-btn").disabled = false;
+        pwCheck.readOnly = false;
+    }
+
+    // null 값 확인
+    function isNull(input) {
+        return input === null || input === "";
+    }
+
+    // 회원 가입 전송 버튼
+    function signUp(){
+        // 전송할 데이터 모음
+        let id;
+        let pw;
+        let name = document.getElementById("name-input").value;
+        let age = document.getElementById("age-input").value;
+        let gender = document.getElementById("gender-select").value;
+        let emailLocalPart = document.getElementById("emailLocalPart").value;
+        let emailDomain = document.getElementById("emailDomain").value;
+        let email = emailLocalPart.concat("@").concat(emailDomain)
+        let tel = document.getElementById("tel-input").value;
+        let department = document.getElementById("department-select").value;
+        let position = document.getElementById("position-select").value;
+        let authority = document.getElementById("authority-select").value;
+
+        // 아이디 확인 했는 지
+        if(document.getElementById("check-id-btn").disabled === true) {
+            id = document.getElementById("id-input").value;
+        } else {
+            return;
+        }
+        // 비밀번호 확인 했는 지
+        if(document.getElementById("check-pw-btn").disabled === true) {
+            pw = document.getElementById("pw-input").value;
+        } else  {
+            return;
+        }
+        // post로 전송
+        axios.post('/admin/signup', {
+            id : id,
+            password : pw,
+            name : name,
+            age : age,
+            gender : gender,
+            email : email,
+            phoneNumber : tel,
+            roles : authority,
+            position : position,
+            departmentCode : department
+        }).then(resposne => {
+            alert(resposne.data.message);
+            if(resposne.data.success) {
+                window.location.href = "/admin/login";
+            }
+        }).catch(error => {
+            alert(error.response.data.message);
+        })
+    }
+</script>
+</body>
+</html>

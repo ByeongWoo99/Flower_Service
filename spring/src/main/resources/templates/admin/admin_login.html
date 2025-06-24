@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--  타임 리프 사용  -->
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login Page</title>
+    <!--  axios 사용  -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<h2>Admin Login</h2>
+<form method="post" action="/admin/login">
+    <label>ID:</label><br>
+    <label>
+        <input type="text" name="username" />
+    </label><br>
+    <label>PW:</label><br>
+    <label>
+        <input type="password" name="password" />
+    </label><br>
+    <button type="submit">Login</button>
+</form>
+<!--<div>-->
+<!--    <label>ID:</label>-->
+<!--    <label for="admin-id"></label><input type="text" id="admin-id">-->
+<!--</div>-->
+<!--<div>-->
+<!--    <label>PW:</label>-->
+<!--    <label for="admin-pw"></label><input type="password" id="admin-pw">-->
+<!--</div>-->
+<!--<div>-->
+<!--    <button onclick="login()">Login</button>-->
+<!--</div>-->
+<script>
+    // function login() {
+    //     // 전달할 데이터 수집
+    //     const id = document.getElementById("admin-id").value;
+    //     const pw = document.getElementById("admin-pw").value;
+    //
+    //     // axios로 전송
+    //     axios.post('/admin/login', {
+    //         id: id,
+    //         pw: pw
+    //     }).then(response => {
+    //         alert(response.data.message);
+    //         // if(response.data.success) {
+    //         //     // 로그인 성공 시 리다이렉트
+    //         //     window.location.href = "/admin/dashboard";
+    //         // }
+    //     }).catch(error => {
+    //         alert(error.response.data.message);
+    //     })
+    // }
+</script>
+</body>
+</html>

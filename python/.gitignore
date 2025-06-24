@@ -1,0 +1,5 @@
+.anaconda/
+
+
+__pycache__/
+../.env

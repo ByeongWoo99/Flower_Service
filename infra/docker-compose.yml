@@ -1,0 +1,72 @@
+services:
+  spring:
+    build:
+      context: ../spring
+    container_name: spring_ttasum
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/${MYSQL_DATABASE}
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    networks:
+      - backend
+
+  db:
+    image: mysql:8.0
+    container_name: mysql_ttasum
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - backend
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.13.0
+    container_name: elasticsearch_ttasum
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - network.host=0.0.0.0
+    ports:
+      - "9200:9200"
+    networks:
+      - backend
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.13.0
+    container_name: logstash_ttasum
+    ports:
+      - "5000:5000" # 로그 입력용 (TCP)
+    volumes:
+      - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    depends_on:
+      - elasticsearch
+    networks:
+      - backend
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.13.0
+    container_name: kibana_ttasum
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+    networks:
+      - backend
+
+
+volumes:
+  db-data:
+
+networks:
+  backend:

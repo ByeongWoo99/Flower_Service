@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Blame Text Management - Story</title>
+</head>
+<body>
+Blame Text Management - Story
+<div>
+    <label>필터링</label>
+    <label>
+        <select name="filter" id="filter-option">
+            <option value="Default" selected>Default</option>
+            <option value="isNotDelete">isNotDelete</option>
+            <option value="isDelete">isDelete</option>
+            <option value="isBlameLabelTrue">isBlameLabelTrue</option>
+            <option value="isBlameLabelFalse">isBlameLabelFalse</option>
+        </select>
+    </label>
+    <label>정렬</label>
+    <label>
+        <select name="order-by" id="order-by">
+            <option value="dateASC">dateASC</option>
+            <option value="dateDESC">dateDESC</option>
+        </select>
+    </label>
+    <button type="button" onclick="filteringByOptionOrderByOption()">filtering</button>
+</div>
+<div>
+</div>
+<!-- 리스트 반복 출력 -->
+<div th:each="letter : ${pageResponse.content}">
+    <p><strong>게시판 종류:</strong> <span id="board-type" th:text="${letter.getBoardType()}"></span></p>
+    <p><strong>문장:</strong> <span th:text="${letter.sentence}"></span></p>
+    <p><strong>AI 비난 글 판단 결과(%):</strong> <span th:text="${letter.confidence * 100} + '%'"></span></p>
+    <p><strong>정책 위반율(%):</strong> <span th:text="${letter.regulation * 100} + '%'"></span></p>
+    <p><strong>갱신일:</strong> <span th:text="${#temporals.format(letter.updateTime, 'yyyy-MM-dd HH:mm')}"></span></p>
+    <p><strong>예측 비난 결과:</strong>
+        <span th:text="${letter.label == 1 ? '비난' : '정상'}"></span>
+    </p>
+    <p><strong>공개 여부:</strong> <span th:text="${letter.deleteFlag == 1 ? '비공개 처리' : '공개 처리'}"></span></p>
+    <button type="button" th:onclick="|goBlameSentenceDetail(${letter.seq})|">상세 문장 분석 결과</button>
+    <button type="button" th:onclick="|deleteBlametextLetter(${letter.originSeq})|">글 비공개 처리</button>
+    <hr/>
+</div>
+
+<!-- 페이지네이션 정보 출력 (선택 사항) -->
+<div>
+    <p>총 페이지: <span th:text="${pageResponse.totalPages}"></span></p>
+    <p>현재 페이지: <span th:text="${pageResponse.page} + ${1}"></span></p>
+</div>
+<script>
+    function goBlameSentenceDetail(seq){
+        window.location.href = "/admin/blameText/story/detail?seq=" + seq;
+    }
+
+    // 글 삭제 delete
+    function deleteBlametextLetter(originSeq) {
+        if(!confirm("이 글을 비공개 처리 하시겠습니까?")) return;
+
+        let baordType = document.getElementById("board-type").innerText;
+
+        axios.delete("/admin/blameText/story/"+originSeq+"/"+baordType)
+            .then(response => {
+                if(response.data.success){
+                    alert(response.data.message);
+                    location.reload();  //현재 페이지 새로고침
+                    }
+            })
+            .catch(error => {
+                alert(error.response.data.message);
+                console.error(error);
+            })
+    }
+
+    function filteringByOptionOrderByOption() {
+        let filter = document.getElementById('filter-option').value;
+        let orderBy = document.getElementById("order-by").value;
+
+        window.location.href = "/admin/blameText/story?filter="+filter+"&orderBy="+orderBy;
+    }
+</script>
+</body>
+</html>

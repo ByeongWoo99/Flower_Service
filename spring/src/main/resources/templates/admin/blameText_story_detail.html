@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Blame Text Detail</title>
+</head>
+<body>
+<div th:each="detail : ${blameDetail}">
+    <p><strong>문장 번호:</strong> <span th:text="${detail.getSentenceSeq()}"></span></p>
+    <p><strong>문장 내용:</strong> <span th:text="${detail.sentence}"></span></p>
+    <p><strong>신뢰도(%):</strong> <span th:text="${detail.confidence * 100} + '%'"></span></p>
+    <p><strong>예측 레이블:</strong> <span th:text="${detail.label}"></span></p>
+    <p><strong>예측 비난 결과:</strong>
+        <span th:text="${detail.label == 1 ? '비난' : '정상'}"></span>
+    </p>
+    <hr/>
+</div>
+</body>
+</html>

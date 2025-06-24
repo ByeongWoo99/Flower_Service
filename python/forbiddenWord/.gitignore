@@ -1,0 +1,8 @@
+results/
+train.tsv
+train_balanced.py
+TrainLog.txt
+tuning.py
+__pycache__
+finetuned-koelectra-badword/
+logs/

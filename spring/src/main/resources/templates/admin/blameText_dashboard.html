@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>BlameText Management</title>
+</head>
+<body>
+BlameText Management
+<div>
+    <label>
+        <button type="button" onclick="hrefURL('story')">게시글 관리</button>
+    </label>
+    <label>
+        <button type="button" onclick="hrefURL('comment')">댓글 관리</button>
+    </label>
+</div>
+<script>
+    function hrefURL(type){
+        if(type === "story") {
+            window.location.href = "/admin/blameText/story";
+        }
+        else if (type === "comment") {
+            window.location.href = "/admin/blameText/comment";
+        }
+    }
+</script>
+</body>
+</html>

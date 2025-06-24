@@ -1,0 +1,24 @@
+__pycache__/
+
+# 학습/실험 코드 - 필요 시만 Git 관리
+continue_training.py
+evaluate_models.py
+prepare_multi_emotions.py
+prepare_NIKL_data.py
+prepare_safe_emotions.py
+prepare_safemotion_pure.py
+save_tokenizer.py
+test.py
+train_anger_classifier.py
+train_multi_classifier.py
+train_safe_classifier.py
+train_WeightedTrainer_with_NIKL.py
+tuning.py
+
+# 결과 디렉토리 무시
+results/
+# 데이터셋 폴더 무시
+kote/
+NIKL_EA/
+
+logs/

@@ -1,0 +1,19 @@
+name: forbiddenWord-env
+channels:
+  - defaults
+dependencies:
+  - python=3.10
+  - pandas
+  - datasets
+  - transformers
+  - scikit-learn
+  - cpuonly
+  - pytorch
+  - torchaudio
+  - torchvision
+  - accelerate
+  - protobuf
+  - fastapi
+  - bs4
+  - uvicorn
+prefix: C:\DBE_Final_Project\python\.anaconda\envs\forbiddenWord-env

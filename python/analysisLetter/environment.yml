@@ -1,0 +1,10 @@
+name: analysisLetter-env
+channels:
+  - defaults
+dependencies:
+  - python=3.10
+  - fastapi
+  - uvicorn
+  - pytorch
+  - transformers
+prefix: C:\DBE_Final_Project\python\.anaconda\envs\analysisLetter-env

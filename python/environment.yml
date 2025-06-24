@@ -1,0 +1,29 @@
+name: org_chart_chatbot_env
+channels:
+  - conda-forge
+  - defaults
+  - pytorch
+dependencies:
+  - python=3.10
+  - pandas
+  - datasets
+  - transformers
+  - scikit-learn
+  - cpuonly
+  - pytorch
+  - torchaudio
+  - torchvision
+  - accelerate
+  - protobuf
+  - fastapi
+  - bs4
+  - uvicorn
+  - langchain
+  - pydantic
+  - pip
+  - pip:
+      - python-dotenv
+      - langchain-upstage
+      - langchain-chroma
+      - langchain-core
+      - asyncmy

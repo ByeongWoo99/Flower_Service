@@ -1,0 +1,39 @@
+2025-06-04 15:59:51 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-04 15:59:51 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-06-04 15:59:51 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-06-04 15:59:54 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2025-06-04 15:59:54 INFO  [restartedMain] c.t.memorial.MemorialApplication - Starting MemorialApplication using Java 17.0.13 on KJ-Laptop with PID 7340 (C:\Users\rnrwl\IdeaProjects\DBE_Final_Project\spring\build\classes\java\main started by kukjin in C:\Users\rnrwl\IdeaProjects\DBE_Final_Project)
+2025-06-04 15:59:54 INFO  [restartedMain] c.t.memorial.MemorialApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-04 15:59:54 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-06-04 15:59:54 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-06-04 15:59:54 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-04 15:59:54 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 40 ms. Found 3 JPA repository interfaces.
+2025-06-04 15:59:55 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2025-06-04 15:59:55 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-04 15:59:55 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-04 15:59:55 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-06-04 15:59:55 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-04 15:59:55 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1420 ms
+2025-06-04 15:59:55 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-04 15:59:55 INFO  [restartedMain] org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+2025-06-04 15:59:55 INFO  [restartedMain] o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2025-06-04 15:59:55 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-06-04 15:59:55 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-06-04 15:59:56 INFO  [restartedMain] org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2025-06-04 15:59:56 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-06-04 15:59:56 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-04 15:59:57 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-04 15:59:57 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-06-04 15:59:57 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-06-04 15:59:57 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-06-04 15:59:57 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2025-06-04 15:59:57 INFO  [restartedMain] c.t.memorial.MemorialApplication - Started MemorialApplication in 4.004 seconds (JVM running for 5.135)
+2025-06-04 16:00:03 INFO  [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-04 16:00:03 INFO  [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-06-04 16:00:03 INFO  [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-06-04 16:00:04 INFO  [http-nio-8080-exec-2] c.t.m.a.l.ControllerLoggingAspect - method=GET, uri=/donationLetters, ip=0:0:0:0:0:0:0:1
+2025-06-04 16:00:05 INFO  [http-nio-8080-exec-3] c.t.m.a.l.ControllerLoggingAspect - method=GET, uri=/donationLetters, ip=0:0:0:0:0:0:0:1
+2025-06-04 16:00:07 INFO  [http-nio-8080-exec-8] c.t.m.a.l.ControllerLoggingAspect - method=GET, uri=/donationLetters, ip=0:0:0:0:0:0:0:1
+2025-06-04 16:18:06 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-04 16:18:06 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-06-04 16:18:06 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
